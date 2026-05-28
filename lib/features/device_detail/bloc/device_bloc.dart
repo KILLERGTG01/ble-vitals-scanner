@@ -135,10 +135,10 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     }
   }
 
-  void _onError(_DeviceError event, Emitter<DeviceState> emit) {
-    _characteristicSubscription?.cancel();
+  Future<void> _onError(_DeviceError event, Emitter<DeviceState> emit) async {
+    await _characteristicSubscription?.cancel();
     _characteristicSubscription = null;
-    _connectionSubscription?.cancel();
+    await _connectionSubscription?.cancel();
     _connectionSubscription = null;
     emit(DeviceError(event.message));
   }

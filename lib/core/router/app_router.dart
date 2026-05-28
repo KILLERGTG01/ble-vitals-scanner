@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/ble/ble_repository.dart';
@@ -21,7 +22,12 @@ abstract final class AppRouter {
           GoRoute(
             path: '/device/:id',
             builder: (context, state) {
-              final device = state.extra! as ScannedDevice;
+              final device = state.extra as ScannedDevice?;
+              if (device == null) {
+                return const Scaffold(
+                  body: Center(child: Text('Device not found. Please go back and try again.')),
+                );
+              }
               return BlocProvider(
                 create: (_) => DeviceBloc(repository: repository)
                   ..add(ConnectDevice(device.id)),

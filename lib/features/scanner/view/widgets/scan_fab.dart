@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -32,7 +34,7 @@ class ScanFab extends HookWidget {
       icon: AnimatedBuilder(
         animation: controller,
         builder: (_, child) => Transform.rotate(
-          angle: controller.value * 6.28,
+          angle: controller.value * 2 * pi,
           child: child,
         ),
         child: Icon(isScanning ? Icons.radar : Icons.search),
