@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-class ScannedDevice extends Equatable {
+final class ScannedDevice extends Equatable {
   const ScannedDevice({
     required this.id,
     required this.name,

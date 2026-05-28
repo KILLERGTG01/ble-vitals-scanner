@@ -24,8 +24,10 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     StartScan event,
     Emitter<ScannerState> emit,
   ) async {
-    emit(ScannerScanning(devices: _currentDevices));
+    final devices = _currentDevices;
     await _scanSubscription?.cancel();
+    _scanSubscription = null;
+    emit(ScannerScanning(devices: devices));
     _scanSubscription = _repository.scanForDevices().listen(
       (device) => add(_DeviceDiscovered(device)),
       onError: (Object e) => add(_ScanErrorOccurred(e.toString())),
@@ -67,8 +69,10 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   void _onScanError(
     _ScanErrorOccurred event,
     Emitter<ScannerState> emit,
-  ) =>
-      emit(ScannerError(event.message));
+  ) {
+    _scanSubscription = null;
+    emit(ScannerError(event.message));
+  }
 
   @override
   Future<void> close() async {
