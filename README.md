@@ -1,17 +1,69 @@
-# ble_scanner
+# BLE Scanner
 
-A new Flutter project.
+A Flutter app that discovers nearby BLE devices, connects to a selected device, and displays its live data stream.
 
-## Getting Started
+## Requirements
 
-This project is a starting point for a Flutter application.
+- Flutter 3.24+ / Dart 3.4+
+- Android 10+ (API 29) device or emulator with BLE support
+- For iOS: Xcode 15+, physical device (BLE unavailable on simulator)
 
-A few resources to get you started if this is your first Flutter project:
+## Setup
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```bash
+git clone <repo>
+cd ble_scanner
+flutter pub get
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For release APK:
+
+```bash
+flutter build apk --release
+# Output: build/app/outputs/flutter-apk/app-release.apk
+```
+
+## Permissions
+
+The app requests at runtime:
+
+| Android Version | Permissions |
+|---|---|
+| < 12 (API < 31) | `ACCESS_FINE_LOCATION` |
+| 12+ (API 31+) | `BLUETOOTH_SCAN`, `BLUETOOTH_CONNECT` |
+
+## Using flutter_reactive_ble
+
+All BLE operations go through `BleRepository` which wraps `FlutterReactiveBle`:
+
+```dart
+// Scanning
+repository.scanForDevices()            // Stream<DiscoveredDevice>
+
+// Connecting
+repository.connectToDevice(id)         // Stream<ConnectionStateUpdate>
+
+// Discovering services
+repository.discoverServices(id)        // Future<List<DiscoveredService>>
+
+// Subscribing to a characteristic
+repository.subscribeToCharacteristic(
+  deviceId: id,
+  serviceId: serviceUuid,
+  characteristicId: charUuid,
+)                                      // Stream<List<int>>
+```
+
+`FlutterReactiveBle` does not expose a disconnect method directly — you cancel the connection stream subscription, and the library handles teardown.
+
+## Testing with the Simulator
+
+Requires a machine with a Bluetooth adapter and Python 3.9+:
+
+```bash
+pip install -r tools/requirements.txt
+python tools/ble_simulator.py
+```
+
+The simulator advertises a device named `BLE-Simulator` with a notifiable characteristic that emits a sine-wave temperature value (IEEE 754 float, little-endian) every second.
