@@ -16,7 +16,8 @@ class DeviceDetailScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
-      return () => context.read<DeviceBloc>().add(const DisconnectDevice());
+      final bloc = context.read<DeviceBloc>();
+      return () => bloc.add(const DisconnectDevice());
     }, const []);
 
     return Scaffold(

@@ -16,7 +16,7 @@ class ConnectionBanner extends StatelessWidget {
         ),
       DeviceConnected() => (
           'Connected',
-          Colors.green.withValues(alpha: 0.15),
+          const Color(0xFF30D158).withValues(alpha: 0.15),
           Icons.bluetooth_connected,
           false,
         ),

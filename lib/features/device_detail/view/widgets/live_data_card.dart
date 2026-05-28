@@ -35,9 +35,22 @@ class LiveDataCard extends StatelessWidget {
                 const Icon(Icons.graphic_eq, size: 18),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    'Live Data',
-                    style: theme.textTheme.titleSmall,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Live Data',
+                        style: theme.textTheme.titleSmall,
+                      ),
+                      Text(
+                        characteristicId,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          fontFamily: 'monospace',
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
                 Text(
