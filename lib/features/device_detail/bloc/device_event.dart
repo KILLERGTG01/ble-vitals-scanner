@@ -34,7 +34,7 @@ final class SubscribeCharacteristic extends DeviceEvent {
   final Uuid serviceId;
   final Uuid characteristicId;
   @override
-  List<Object?> get props => [serviceId, characteristicId];
+  List<Object?> get props => [deviceId, serviceId, characteristicId];
 }
 
 final class UnsubscribeCharacteristic extends DeviceEvent {

@@ -21,9 +21,11 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     ConnectDevice event,
     Emitter<DeviceState> emit,
   ) async {
-    emit(DeviceConnecting(event.deviceId));
+    await _characteristicSubscription?.cancel();
+    _characteristicSubscription = null;
     await _connectionSubscription?.cancel();
     _connectionSubscription = null;
+    emit(DeviceConnecting(event.deviceId));
     _connectionSubscription = _repository
         .connectToDevice(event.deviceId)
         .listen(
@@ -55,6 +57,7 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
         };
         try {
           final services = await _repository.discoverServices(deviceId);
+          if (state is DeviceDisconnected) return;
           emit(DeviceConnected(deviceId: deviceId, services: services));
         } catch (e) {
           emit(DeviceError(e.toString()));
@@ -132,8 +135,13 @@ class DeviceBloc extends Bloc<DeviceEvent, DeviceState> {
     }
   }
 
-  void _onError(_DeviceError event, Emitter<DeviceState> emit) =>
-      emit(DeviceError(event.message));
+  void _onError(_DeviceError event, Emitter<DeviceState> emit) {
+    _characteristicSubscription?.cancel();
+    _characteristicSubscription = null;
+    _connectionSubscription?.cancel();
+    _connectionSubscription = null;
+    emit(DeviceError(event.message));
+  }
 
   @override
   Future<void> close() async {
