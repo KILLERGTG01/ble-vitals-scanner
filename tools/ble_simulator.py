@@ -97,6 +97,7 @@ class _Delegate(NSObject):
     # Internal helpers
     # ------------------------------------------------------------------
 
+    @objc.python_method
     def _setup_service(self):
         init_value = NSData.dataWithBytes_length_(struct.pack("<f", 20.0), 4)
         self._char = CBMutableCharacteristic.alloc().initWithType_properties_value_permissions_(
@@ -111,6 +112,7 @@ class _Delegate(NSObject):
         service.setCharacteristics_([self._char])
         self._manager.addService_(service)
 
+    @objc.python_method
     def notify(self, value_bytes: bytes) -> None:
         data = NSData.dataWithBytes_length_(value_bytes, len(value_bytes))
         self._char.setValue_(data)
