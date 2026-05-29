@@ -8,9 +8,15 @@ Built with `flutter_reactive_ble`, BLoC, `go_router`, and `flutter_hooks` on a c
 
 ## Screenshots
 
-| Scanner | Device Detail | Services | Live Data | Error State |
-|---------|--------------|----------|-----------|-------------|
-| ![1](screenshots/1.jpeg) | ![2](screenshots/2.jpeg) | ![3](screenshots/3.jpeg) | ![4](screenshots/4.jpeg) | ![5](screenshots/5.jpeg) |
+![Scanner](screenshots/1.jpeg)
+
+![Device Detail](screenshots/2.jpeg)
+
+![Services](screenshots/3.jpeg)
+
+![Live Data](screenshots/4.jpeg)
+
+![Error State](screenshots/5.jpeg)
 
 ---
 
