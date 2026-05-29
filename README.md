@@ -57,13 +57,4 @@ repository.subscribeToCharacteristic(
 
 `FlutterReactiveBle` does not expose a disconnect method directly — you cancel the connection stream subscription, and the library handles teardown.
 
-## Testing with the Simulator
 
-Requires a machine with a Bluetooth adapter and Python 3.9+:
-
-```bash
-pip install -r tools/requirements.txt
-python tools/ble_simulator.py
-```
-
-The simulator advertises a device named `BLE-Simulator` with a notifiable characteristic that emits a sine-wave temperature value (IEEE 754 float, little-endian) every second.
