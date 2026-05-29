@@ -57,4 +57,8 @@ repository.subscribeToCharacteristic(
 
 `FlutterReactiveBle` does not expose a disconnect method directly — you cancel the connection stream subscription, and the library handles teardown.
 
+## Screenshots
 
+| | | | | |
+|---|---|---|---|---|
+| ![Screen 1](screenshots/1.jpeg) | ![Screen 2](screenshots/2.jpeg) | ![Screen 3](screenshots/3.jpeg) | ![Screen 4](screenshots/4.jpeg) | ![Screen 5](screenshots/5.jpeg) |
